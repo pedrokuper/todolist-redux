@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React from "react";
+import Button from "./components/Button";
+import Input from "./components/Input";
+import TaskList from "./components/TaskList";
+import { connect } from "react-redux";
+import { addTask } from "./store";
+import {useDispatch,useSelector,useStore} from 'react-redux' 
+class App extends React.Component {
+  handleCLick() {
+    const { dispatch } = this.props;
+    dispatch(addTask());
+  }
+  render() {
+    return (
+      <>
+        <Input label="Escribí las tareas acá: " />
+        <Button label="Agregar tarea" />
+        <TaskList />
+      </>
+    );
+  }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    tasks: state.tasks
+  };
+}
+
+export default connect(mapStateToProps)(App);
+
+/*
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+    tasks: state.tasks
+  };
+}
+
+export default connect(mapStateToProps)(App);
+
+ HOC -> High Order Component -> Es lo mismo que hacer 
+ 
+ */
